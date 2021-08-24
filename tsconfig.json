@@ -18,9 +18,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // d.ts系を自動importするように変更しても良さそう
+    "typeRoots": ["src/graphql/gen"]
   },
   "include": [
     "src"
-  ]
+  ],
 }
