@@ -1,0 +1,10 @@
+schema: http://localhost:4000/graphql
+documents:
+  # - ./graphql/queries/*.graphql
+  # - ./graphql/mutations/*.graphql
+  - src/**/!(*.d).{graphql,js,ts,jsx,tsx}
+generates:
+  ./src/graphql/gen/graphql-client-api.tsx:
+      - typescript
+      - typescript-operations # .tsxに書いたquery, mutation等から対応する型を生成する
+      - typescript-react-apollo # .tsxに書いたquery, mutation等から対応するhooksを生成する

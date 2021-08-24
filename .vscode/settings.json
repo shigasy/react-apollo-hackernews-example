@@ -1,0 +1,5 @@
+// graphql query auto complete
+// https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql
+{
+  "graphql-config.load.rootDir": "./src/graphql"
+}

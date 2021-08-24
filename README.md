@@ -1,2 +1,12 @@
 # react-apollo-hackernews-example
 https://www.howtographql.com/react-apollo/1-getting-started/
+
+
+codegen便利だが、末端のgql queryもrootのhooksも生成してくれるため、それを他のコンポーネントで呼び出すと末端のコンポーネントに暗黙的な依存をすることになってしまう（末端のコンポーネントを変更すると他のコンポーネントに影響でるし、末端のコンポーネントを削除しづらい）
+クリーンアーキテクチャでいうと、内部のものが外部に依存している状態
+atomic designで外部に依存するような層を決めるか、完全にrootでgql queryを作るか
+ただ、リクエストは使うコンポーネントの近くに起きたい気持ちはある
+共通のものはsharedかrootに起きたい
+
+末端が外部に依存することは避けたい 純粋な関数にしたい 外部の実装に引っ張られる graphqlでなくても良いから
+hooksでどうにかなるものなのか？
