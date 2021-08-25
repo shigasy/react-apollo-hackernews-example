@@ -113,12 +113,56 @@ export type Vote = {
   user: User;
 };
 
+export type PostMutationMutationVariables = Exact<{
+  description: Scalars['String'];
+  url: Scalars['String'];
+}>;
+
+
+export type PostMutationMutation = { __typename?: 'Mutation', post: { __typename?: 'Link', id: string, description: string, url: string } };
+
 export type FeedLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FeedLinksQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', links: Array<{ __typename?: 'Link', id: string, url: string, description: string }> } };
 
 
+export const PostMutationDocument = gql`
+    mutation PostMutation($description: String!, $url: String!) {
+  post(description: $description, url: $url) {
+    id
+    description
+    url
+  }
+}
+    `;
+export type PostMutationMutationFn = Apollo.MutationFunction<PostMutationMutation, PostMutationMutationVariables>;
+
+/**
+ * __usePostMutationMutation__
+ *
+ * To run a mutation, you first call `usePostMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postMutationMutation, { data, loading, error }] = usePostMutationMutation({
+ *   variables: {
+ *      description: // value for 'description'
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function usePostMutationMutation(baseOptions?: Apollo.MutationHookOptions<PostMutationMutation, PostMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostMutationMutation, PostMutationMutationVariables>(PostMutationDocument, options);
+      }
+export type PostMutationMutationHookResult = ReturnType<typeof usePostMutationMutation>;
+export type PostMutationMutationResult = Apollo.MutationResult<PostMutationMutation>;
+export type PostMutationMutationOptions = Apollo.BaseMutationOptions<PostMutationMutation, PostMutationMutationVariables>;
 export const FeedLinksDocument = gql`
     query FeedLinks {
   feed {

@@ -13,7 +13,7 @@ query FeedLinks {
 }
 `;
 
-const LinkList = () => {}
+const LinkList = () => {
   // const { data, error } = useQuery<FeedLinksQuery>(FEED_QUERY)
 
   // typescript-react-apollo pluginでhooksができている
