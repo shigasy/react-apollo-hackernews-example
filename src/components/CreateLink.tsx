@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import React, {useState} from "react"
+import { useHistory } from "react-router-dom"
 import {usePostMutationMutation} from "./../graphql/gen/graphql-client-api"
 gql`
 mutation PostMutation($description: String!, $url: String!) {
@@ -13,6 +14,8 @@ mutation PostMutation($description: String!, $url: String!) {
 
 const CreateLink = () => {
 
+  const history = useHistory()
+
   const [formState, setFormState] = useState({
     url: '',
     description: ''
@@ -22,7 +25,8 @@ const CreateLink = () => {
     variables: {
       description: formState.description,
       url: formState.url
-    }
+    },
+    onCompleted: () => history.push('/')
   })
 
   return (
