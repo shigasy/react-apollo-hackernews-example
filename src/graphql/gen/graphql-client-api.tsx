@@ -124,7 +124,7 @@ export type PostMutationMutation = { __typename?: 'Mutation', post: { __typename
 export type FeedLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedLinksQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', links: Array<{ __typename?: 'Link', id: string, url: string, description: string }> } };
+export type FeedLinksQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', links: Array<{ __typename?: 'Link', id: string, url: string, description: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }>, postedBy?: Maybe<{ __typename?: 'User', id: string, name: string }> }> } };
 
 export type SignupMutationMutationVariables = Exact<{
   email: Scalars['String'];
@@ -187,6 +187,16 @@ export const FeedLinksDocument = gql`
       id
       url
       description
+      votes {
+        id
+        user {
+          id
+        }
+      }
+      postedBy {
+        id
+        name
+      }
     }
   }
 }

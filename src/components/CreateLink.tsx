@@ -2,6 +2,8 @@ import { gql } from "@apollo/client"
 import React, {useState} from "react"
 import { useHistory } from "react-router-dom"
 import {usePostMutationMutation} from "./../graphql/gen/graphql-client-api"
+import { LINKS_PER_PAGE } from '../constants';
+import { FeedLinksDocument } from '../graphql/gen/graphql-client-api';
 gql`
 mutation PostMutation($description: String!, $url: String!) {
   post(description: $description, url: $url) {
@@ -26,7 +28,35 @@ const CreateLink = () => {
       description: formState.description,
       url: formState.url
     },
-    onCompleted: () => history.push('/')
+    update: (cache, { data: { post } }: any) => {
+      const take = LINKS_PER_PAGE;
+      const skip = 0;
+      const orderBy = { createdAt: 'desc' };
+
+      const data = cache.readQuery({
+        query: FeedLinksDocument,
+        variables: {
+          take,
+          skip,
+          orderBy
+        }
+      }) as any;
+
+      cache.writeQuery({
+        query: FeedLinksDocument,
+        data: {
+          feed: {
+            links: [post, ...data.feed.links]
+          }
+        },
+        variables: {
+          take,
+          skip,
+          orderBy
+        }
+      });
+    },
+    onCompleted: () => history.push('/new/1')
   })
 
   return (

@@ -8,6 +8,16 @@ query FeedLinks {
       id
       url
       description
+      votes {
+        id
+        user {
+          id
+        }
+      }
+      postedBy {
+        id
+        name
+      }
     }
   }
 }
@@ -21,8 +31,8 @@ const LinkList = () => {
 
   return (
     <div>
-      {data && data.feed.links.map((link) => (
-        <Link key={link.id} link={link} />
+      {data && data.feed.links.map((link: any, index) => (
+        <Link key={link.id} link={link} index={index} />
       ))}
     </div>
   )
