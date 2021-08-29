@@ -108,7 +108,7 @@ const [login] = useLoginMutationMutation({
       <div className="flex mt3">
         <button
           className="pointer mr2 button"
-          onClick={formState.login ? () => console.log('') : signup}
+          onClick={formState.login ? login : signup}
         >
           {formState.login ? 'login' : 'create account'}
         </button>
