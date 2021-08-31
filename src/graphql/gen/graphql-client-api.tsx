@@ -121,10 +121,22 @@ export type PostMutationMutationVariables = Exact<{
 
 export type PostMutationMutation = { __typename?: 'Mutation', post: { __typename?: 'Link', id: string, description: string, url: string } };
 
+export type VoteMutationMutationVariables = Exact<{
+  linkId: Scalars['ID'];
+}>;
+
+
+export type VoteMutationMutation = { __typename?: 'Mutation', vote: { __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } } };
+
 export type FeedLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FeedLinksQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', links: Array<{ __typename?: 'Link', id: string, url: string, description: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }>, postedBy?: Maybe<{ __typename?: 'User', id: string, name: string }> }> } };
+
+export type New_Links_SubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type New_Links_SubscriptionSubscription = { __typename?: 'Subscription', newLink?: Maybe<{ __typename?: 'Link', id: string, url: string, description: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }>, postedBy?: Maybe<{ __typename?: 'User', id: string, name: string }> }> };
 
 export type SignupMutationMutationVariables = Exact<{
   email: Scalars['String'];
@@ -180,6 +192,51 @@ export function usePostMutationMutation(baseOptions?: Apollo.MutationHookOptions
 export type PostMutationMutationHookResult = ReturnType<typeof usePostMutationMutation>;
 export type PostMutationMutationResult = Apollo.MutationResult<PostMutationMutation>;
 export type PostMutationMutationOptions = Apollo.BaseMutationOptions<PostMutationMutation, PostMutationMutationVariables>;
+export const VoteMutationDocument = gql`
+    mutation VoteMutation($linkId: ID!) {
+  vote(linkId: $linkId) {
+    id
+    link {
+      id
+      votes {
+        id
+        user {
+          id
+        }
+      }
+    }
+    user {
+      id
+    }
+  }
+}
+    `;
+export type VoteMutationMutationFn = Apollo.MutationFunction<VoteMutationMutation, VoteMutationMutationVariables>;
+
+/**
+ * __useVoteMutationMutation__
+ *
+ * To run a mutation, you first call `useVoteMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVoteMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [voteMutationMutation, { data, loading, error }] = useVoteMutationMutation({
+ *   variables: {
+ *      linkId: // value for 'linkId'
+ *   },
+ * });
+ */
+export function useVoteMutationMutation(baseOptions?: Apollo.MutationHookOptions<VoteMutationMutation, VoteMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VoteMutationMutation, VoteMutationMutationVariables>(VoteMutationDocument, options);
+      }
+export type VoteMutationMutationHookResult = ReturnType<typeof useVoteMutationMutation>;
+export type VoteMutationMutationResult = Apollo.MutationResult<VoteMutationMutation>;
+export type VoteMutationMutationOptions = Apollo.BaseMutationOptions<VoteMutationMutation, VoteMutationMutationVariables>;
 export const FeedLinksDocument = gql`
     query FeedLinks {
   feed {
@@ -228,6 +285,47 @@ export function useFeedLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type FeedLinksQueryHookResult = ReturnType<typeof useFeedLinksQuery>;
 export type FeedLinksLazyQueryHookResult = ReturnType<typeof useFeedLinksLazyQuery>;
 export type FeedLinksQueryResult = Apollo.QueryResult<FeedLinksQuery, FeedLinksQueryVariables>;
+export const New_Links_SubscriptionDocument = gql`
+    subscription NEW_LINKS_SUBSCRIPTION {
+  newLink {
+    id
+    url
+    description
+    votes {
+      id
+      user {
+        id
+      }
+    }
+    postedBy {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useNew_Links_SubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useNew_Links_SubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNew_Links_SubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNew_Links_SubscriptionSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNew_Links_SubscriptionSubscription(baseOptions?: Apollo.SubscriptionHookOptions<New_Links_SubscriptionSubscription, New_Links_SubscriptionSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<New_Links_SubscriptionSubscription, New_Links_SubscriptionSubscriptionVariables>(New_Links_SubscriptionDocument, options);
+      }
+export type New_Links_SubscriptionSubscriptionHookResult = ReturnType<typeof useNew_Links_SubscriptionSubscription>;
+export type New_Links_SubscriptionSubscriptionResult = Apollo.SubscriptionResult<New_Links_SubscriptionSubscription>;
 export const SignupMutationDocument = gql`
     mutation SignupMutation($email: String!, $password: String!, $name: String!) {
   signup(email: $email, password: $password, name: $name) {
